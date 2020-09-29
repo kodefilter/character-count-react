@@ -80,7 +80,16 @@ function App() {
         <button type="submit">Run</button>
       </form>
       {chartData === null ? (
-        <h1>Input text above 👆🏼 and click RUN 👉🏼 </h1>
+        <h1>
+          Input text above{' '}
+          <span role="img" aria-label="point up emoji">
+            👆🏼{' '}
+          </span>
+          and click RUN{' '}
+          <span role="img" aria-label="point right emoji">
+            👉🏼{' '}
+          </span>
+        </h1>
       ) : (
         <Chart chartData={chartData} />
       )}
