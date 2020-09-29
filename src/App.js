@@ -9,6 +9,11 @@ function App() {
     setInputText(event.target.value)
   }
 
+  const analyzeText = event => {
+    event.preventDefault()
+    setChartData(createChartData(inputText))
+  }
+
   const createChartData = text => {
     //removing non alphabetic characters
     const cleanString = text.toLowerCase().replace(/[^A-Za-z]/g, '')
