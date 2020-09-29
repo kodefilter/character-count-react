@@ -52,6 +52,16 @@ function App() {
     }
   }
 
+  const dynamicColors = data => {
+    const backgroundColorArray = data.map(element => {
+      var r = Math.floor(Math.random() * 255)
+      var g = Math.floor(Math.random() * 255)
+      var b = Math.floor(Math.random() * 255)
+      return 'rgb(' + r + ',' + g + ',' + b + ')'
+    })
+    return backgroundColorArray
+  }
+
   return (
     <div className="App">
       <h1>Analyze Text</h1>
