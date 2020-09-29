@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './App.css'
+import Chart from './components/Chart'
 
 function App() {
   const [chartData, setChartData] = useState(null)
@@ -78,6 +79,11 @@ function App() {
         ></textarea>
         <button type="submit">Run</button>
       </form>
+      {chartData === null ? (
+        <h1>Input text above 👆🏼 and click RUN 👉🏼 </h1>
+      ) : (
+        <Chart chartData={chartData} />
+      )}
     </div>
   )
 }
