@@ -42,9 +42,9 @@ function App() {
     })
 
     // format result to create chartData
-    const labels = result.characterCount.map(element => Object.keys(element)[0])
+    const labels = result.map(element => Object.keys(element)[0])
 
-    const data = result.characterCount.map(element => Object.values(element)[0])
+    const data = result.map(element => Object.values(element)[0])
 
     return {
       labels: labels,
