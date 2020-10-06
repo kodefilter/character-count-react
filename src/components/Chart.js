@@ -9,7 +9,6 @@ const Chart = ({ chartData }) => {
         options={{
           title: {
             display: true,
-            text: 'Character Count',
             fontSize: 25,
           },
           legend: {

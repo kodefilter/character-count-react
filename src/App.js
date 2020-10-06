@@ -2,33 +2,33 @@ import React, { useState, createRef } from 'react'
 import './App.css'
 import Chart from './components/Chart'
 
-
-
 function App() {
   const [chartData, setChartData] = useState(null)
   const fileInput = createRef()
 
-
-  const handleSubmit = (event) => {
+  const handleClick = event => {
     event.preventDefault()
 
     let file = fileInput.current.files[0]
 
-    let reader = new FileReader()
+    if (file) {
+      let reader = new FileReader()
 
-    reader.readAsText(file)
+      reader.readAsText(file)
 
-    reader.onload = function() {
-      let chardata = createChartData(reader.result)
-      setChartData(chardata)
+      reader.onload = function () {
+        let chardata = createChartData(reader.result)
+        setChartData(chardata)
+      }
+
+      reader.onerror = function () {
+        console.log(reader.error)
+      }
+    } else {
+      window.alert('😡 😡 😡  Are you stupid or what ? choose a file first !!!')
     }
-
-    reader.onerror = function(){
-      console.log(reader.error)
-    }
-
   }
-  
+
   const createChartData = text => {
     //removing non alphabetic characters
     const cleanString = text.toLowerCase().replace(/[^A-Za-z]/g, '')
@@ -84,31 +84,35 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Analyze Text</h1>
-
-      <form onSubmit={handleSubmit}>
-        <label>
-          Upload file:
-          <input type="file" ref={fileInput} />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-        
-      {chartData === null ? (
-        <h1>
-          Input text above{' '}
-          <span role="img" aria-label="point up emoji">
-            👆🏼{' '}
-          </span>
-          and click RUN{' '}
-          <span role="img" aria-label="point right emoji">
-            👉🏼{' '}
-          </span>
-        </h1>
-      ) : (
-        <Chart chartData={chartData} />
-      )}
+      <h1>Analyze Text (File Edition)</h1>
+      <div className="Input">
+        <div>
+          <input type="file" ref={fileInput} accept=".txt,.pdf" />
+        </div>
+        <div>
+          <button type="submit" onClick={handleClick}>
+            Analyze
+          </button>
+        </div>
+      </div>
+      <div className="output">
+        {chartData === null ? (
+          <h2>
+            <span role="img" aria-label="point up emoji">
+              👆🏼
+            </span>{' '}
+            Choose a 📃 file and click Analyze{' '}
+            <span role="img" aria-label="point right emoji">
+              👆🏼{' '}
+            </span>
+          </h2>
+        ) : (
+          <>
+          <h2>Character count in your file</h2>
+          <Chart chartData={chartData} />
+          </>
+        )}
+      </div>
     </div>
   )
 }
