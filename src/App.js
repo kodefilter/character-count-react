@@ -1,28 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, createRef } from 'react'
 import './App.css'
 import Chart from './components/Chart'
 
-const fs = require('fs')
-const pdf = require('pdf-parse')
+
 
 function App() {
   const [chartData, setChartData] = useState(null)
-  const [inputText, setInputText] = useState('')
+  const fileInput = createRef()
 
-  const handleInputTextChange = event => {
-    let dataBuffer = fs.readFileSync('./pdf.pdf')
 
-    pdf(dataBuffer).then(function (data) {
-      setInputText(data)
-    })
-  }
-
-  const analyzeText = event => {
+  const handleSubmit = (event) => {
     event.preventDefault()
 
-    setChartData(createChartData(inputText))
-  }
+    let file = fileInput.current.files[0]
 
+    let reader = new FileReader()
+
+    reader.readAsText(file)
+
+    reader.onload = function() {
+      let chardata = createChartData(reader.result)
+      setChartData(chardata)
+    }
+
+    reader.onerror = function(){
+      console.log(reader.error)
+    }
+
+  }
+  
   const createChartData = text => {
     //removing non alphabetic characters
     const cleanString = text.toLowerCase().replace(/[^A-Za-z]/g, '')
@@ -79,15 +85,16 @@ function App() {
   return (
     <div className="App">
       <h1>Analyze Text</h1>
-      <form onSubmit={analyzeText} className="form">
-        <input
-          id="text"
-          type="file"
-          value={inputText}
-          onChange={handleInputTextChange}
-        ></input>
-        <button type="submit">Run</button>
+
+      <form onSubmit={handleSubmit}>
+        <label>
+          Upload file:
+          <input type="file" ref={fileInput} />
+        </label>
+        <br />
+        <button type="submit">Submit</button>
       </form>
+        
       {chartData === null ? (
         <h1>
           Input text above{' '}
