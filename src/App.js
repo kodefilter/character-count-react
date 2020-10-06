@@ -2,16 +2,24 @@ import React, { useState } from 'react'
 import './App.css'
 import Chart from './components/Chart'
 
+const fs = require('fs')
+const pdf = require('pdf-parse')
+
 function App() {
   const [chartData, setChartData] = useState(null)
   const [inputText, setInputText] = useState('')
 
   const handleInputTextChange = event => {
-    setInputText(event.target.value)
+    let dataBuffer = fs.readFileSync('./pdf.pdf')
+
+    pdf(dataBuffer).then(function (data) {
+      setInputText(data)
+    })
   }
 
   const analyzeText = event => {
     event.preventDefault()
+
     setChartData(createChartData(inputText))
   }
 
@@ -72,11 +80,12 @@ function App() {
     <div className="App">
       <h1>Analyze Text</h1>
       <form onSubmit={analyzeText} className="form">
-        <textarea
+        <input
           id="text"
+          type="file"
           value={inputText}
           onChange={handleInputTextChange}
-        ></textarea>
+        ></input>
         <button type="submit">Run</button>
       </form>
       {chartData === null ? (
