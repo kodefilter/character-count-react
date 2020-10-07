@@ -25,7 +25,7 @@ function App() {
         console.log(reader.error)
       }
     } else {
-      window.alert('😡 😡 😡  Are you stupid or what ? choose a file first !!!')
+      window.alert('Please choose a file first and then click Analyze button.')
     }
   }
 
