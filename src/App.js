@@ -1,10 +1,21 @@
-import React, { useState, createRef } from 'react'
+import React, { useState, createRef, useEffect } from 'react'
+import ReactGA from 'react-ga'
+
 import './App.css'
 import Chart from './components/Chart'
 
 function App() {
   const [chartData, setChartData] = useState(null)
   const fileInput = createRef()
+
+
+  useEffect(() => {
+    ReactGA.initialize('G-QH320V5RZN')
+    ReactGA.pageview(window.location.pathname)
+  })
+
+
+
 
   const handleClick = event => {
     event.preventDefault()
