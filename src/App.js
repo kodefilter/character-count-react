@@ -1,11 +1,11 @@
-import React, { useState, createRef } from 'react'
+import React, { useState, useRef } from 'react'
 
 import './App.css'
 import Chart from './components/Chart'
 
 function App() {
   const [chartData, setChartData] = useState(null)
-  const fileInput = createRef()
+  const fileInput = useRef()
 
   const handleClick = event => {
     event.preventDefault()
@@ -46,9 +46,7 @@ function App() {
     )
 
     // map array of arrays to array of objects
-    const arrayOfObjects = arrayOfArrays.map(function ([a, b]) {
-      return { [a]: b }
-    })
+    const arrayOfObjects = arrayOfArrays.map( ([a, b]) => ({ [a]: b }))
 
     // sort array of objects alphabetically
     const result = arrayOfObjects.sort(function (a, b) {
@@ -74,13 +72,7 @@ function App() {
   }
 
   const dynamicColors = data => {
-    const backgroundColorArray = data.map(element => {
-      var r = Math.floor(Math.random() * 255)
-      var g = Math.floor(Math.random() * 255)
-      var b = Math.floor(Math.random() * 255)
-      return 'rgb(' + r + ',' + g + ',' + b + ')'
-    })
-    return backgroundColorArray
+    return data.map(_element => 'rgb(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ')')
   }
 
   return (
